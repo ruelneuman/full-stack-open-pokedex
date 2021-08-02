@@ -32,3 +32,6 @@ jobs:
           heroku_api_key: ${{secrets.HEROKU_API_KEY}}
           heroku_app_name: pokedex-ruel-neuman
           heroku_email: ${{secrets.HEROKU_EMAIL}}
+          healthCheck: 'https://pokedex-ruel-neuman.herokuapp.com/health'
+          checkstring: 'ok'
+          rollbackonhealthcheckfailed: true
