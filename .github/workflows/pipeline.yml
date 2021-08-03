@@ -48,3 +48,19 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           DEFAULT_BUMP: patch
           RELEASE_BRANCHES: master
+      - name: Slack success notification
+        uses: 8398a7/action-slack@e74cd4e48f4452e8158dc4f8bcfc780ae6203364
+        with:
+          status: ${{ job.status }}
+          fields: repo, message, commit, author, took
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+        if: ${{ success() }}
+      - name: Slack failure notification
+        uses: 8398a7/action-slack@e74cd4e48f4452e8158dc4f8bcfc780ae6203364
+        with:
+          status: ${{ job.status }}
+          fields: commit, author, took
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+        if: ${{ failure() }}
